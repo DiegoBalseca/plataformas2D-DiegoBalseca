@@ -10,11 +10,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     private InputAction _jumpAction;
     private InputAction _attackAction;
+    private InputAction _interactAction;
+
     [SerializeField] private float _playerVelocity = 5;
     [SerializeField] private float _jumpHeight = 2.5f;
     private bool _alreadyLanded = true;
     [SerializeField] private Transform _sensorPosition;
     [SerializeField] private Vector2 _sensorSize = new Vector2(0.5f, 0.5f);
+
+    [SerializeField] private Vector2 _interactionZone = new Vector2(1, 1);
 
 
 
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions["Move"];
         _jumpAction = InputSystem.actions["Jump"];
         _attackAction = InputSystem.actions["Attack"];
+        _interactAction = InputSystem.actions["Interact"];
         //  _groundsensor = GetComponentInChildren<GroundSensor>();
     }
     void Start()
@@ -44,15 +49,6 @@ public class PlayerController : MonoBehaviour
         //transform.position = transform.position + new Vector3(_moveInput.x, 0, 0) * _playerVelocity * Time.deltaTime;
         _rigidBody.linearVelocity = new Vector2(_moveInput.x * _playerVelocity, _rigidBody.linearVelocityY);
         
-        if(_alreadyLanded == false)
-        {
-            if(isGrounded())
-            {
-                _animator.SetBool("IsJumping", false);
-                _alreadyLanded = true;
-            }
-        }
-
 
         if (_jumpAction.WasPressedThisFrame() && isGrounded())
         {
@@ -60,7 +56,15 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        if(_interactAction.WasPerformedThisFrame())
+        {
+            Interact();
+        }
+        
+
         Movement();
+        _animator.SetBool("IsJumping", !isGrounded());
+
 
         
        
@@ -92,8 +96,22 @@ public class PlayerController : MonoBehaviour
     {
         _rigidBody.AddForce(transform.up * Mathf.Sqrt(_jumpHeight * -2 * Physics2D.gravity.y), ForceMode2D.Impulse);
         Debug.Log("salto");
-        _animator.SetBool("IsJumping", true);
+        
+      
 
+    }
+
+    void Interact()
+    {
+       // Debug.Log("Haciendo cosas");
+       Collider2D[] interacables = Physics2D.OverlapBoxAll(transform.position, _interactionZone, 0);
+       foreach (Collider2D item in interacables)
+       {
+        if(item.gameObject.tag == "Star")
+        {
+            Debug.Log("tocando estrellas");
+        }
+       }
     }
 
     bool isGrounded()
@@ -103,12 +121,12 @@ public class PlayerController : MonoBehaviour
         {
             if (item.gameObject.layer == 3)
             {
-                //_alreadyLanded = true;
+                
                 return true;
             }
         }
 
-        _alreadyLanded = false;
+        
         return false;
     }
 
@@ -116,5 +134,8 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_sensorPosition.position, _sensorSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, _interactionZone);
     }
 }
