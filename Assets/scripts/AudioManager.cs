@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeBGM(AudioClip bgmclip)
     {
-        _bgmSource.clip = bgmClip;
+        _bgmSource.clip = bgmclip;
         _bgmSource.Play();
     }
   
