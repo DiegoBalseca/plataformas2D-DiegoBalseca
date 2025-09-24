@@ -109,7 +109,12 @@ public class PlayerController : MonoBehaviour
        {
         if(item.gameObject.tag == "Star")
         {
-            Debug.Log("tocando estrellas");
+            Star starScript = item.gameObject.GetComponent<Star>(); 
+            
+                if (starScript != null)
+                {
+                    starScript.Interaction();
+                }
         }
        }
     }
