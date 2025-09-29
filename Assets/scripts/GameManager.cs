@@ -1,8 +1,20 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
+
+    private bool _isPaused = false;
+
+    [SerializeField] private GameObject _pauseCanvas; 
+
+    [SerializeField] private InputActionAsset playerInputs;
+
+    private InputAction _pauseInput; 
+
+    
+
 
     int _stars = 0;
 
@@ -19,6 +31,8 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        _pauseInput = InputSystem.actions["Pause"];
     }
 
  
@@ -27,6 +41,33 @@ public class GameManager : MonoBehaviour
     {
         _stars++;
         Debug.Log("Estrella recogidas: " + _stars); 
+        
+    }
+
+    void Update()
+    {
+        if(_pauseInput.WasPerformedThisFrame())
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {
+        if(_isPaused)
+        {
+            Time.timeScale = 1;
+            _pauseCanvas.SetActive(false);
+            playerInputs.FindActionMap("Player").Enable();
+            _isPaused = false;
+        }
+        else
+        {
+            Time.timeScale = 0;
+            _pauseCanvas.SetActive(true);
+            playerInputs.FindActionMap("Player").Disable();
+            _isPaused = true;
+        }
         
     }
 }
