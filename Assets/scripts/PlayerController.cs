@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _attackAction;
     private InputAction _interactAction;
 
-    [SerializeField] private int _maxHealth 10;
+    [SerializeField] private int _maxHealth = 10;
     [SerializeField] private int _currentHealth;
 
     [SerializeField] private float _playerVelocity = 5;
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
         if(_currentHealth <= 0)
         {
-            death();
+            Death();
         }
     }
 
