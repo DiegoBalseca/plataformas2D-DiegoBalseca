@@ -6,10 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
-    private bool _isPaused = false;
+    public bool _isPaused = false;
 
     
-    [SerializeField] private InputActionAsset playerInputs;
+    [SerializeField] public InputActionAsset playerInputs;
 
     private InputAction _pauseInput; 
 

@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     private InputAction _attackAction;
     private InputAction _interactAction;
 
-    [SerializeField] private int _maxHealth = 10;
-    [SerializeField] private int _currentHealth;
+    [SerializeField] private float _maxHealth = 10;
+    [SerializeField] private float _currentHealth;
 
     [SerializeField] private float _playerVelocity = 5;
     [SerializeField] private float _jumpHeight = 2.5f;
@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
       
 
     }
+
+    
 
     void Interact()
     {
