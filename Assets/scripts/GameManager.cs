@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
     private bool _isPaused = false;
 
-    [SerializeField] private GameObject _pauseCanvas; 
-
+    
     [SerializeField] private InputActionAsset playerInputs;
 
     private InputAction _pauseInput; 
@@ -57,14 +57,14 @@ public class GameManager : MonoBehaviour
         if(_isPaused)
         {
             Time.timeScale = 1;
-            _pauseCanvas.SetActive(false);
+            GUIGame.Instance.ChangeCanvasStatus(GUIGame.Instance._pauseCanvas, false);
             playerInputs.FindActionMap("Player").Enable();
             _isPaused = false;
         }
         else
         {
             Time.timeScale = 0;
-            _pauseCanvas.SetActive(true);
+            GUIGame.Instance.ChangeCanvasStatus(GUIGame.Instance._pauseCanvas, true);
             playerInputs.FindActionMap("Player").Disable();
             _isPaused = true;
         }
