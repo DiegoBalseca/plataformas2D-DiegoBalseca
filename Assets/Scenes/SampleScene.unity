@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d6dd3adf5d0c349a959eaa8613b7c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPaused: 0
   playerInputs: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
 --- !u!4 &84719456
 Transform:
@@ -9705,6 +9706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DirectionEnemy: 1
   _enemiesVelocity: 5
+  _maxHealth: 10
 --- !u!61 &2111583533
 BoxCollider2D:
   m_ObjectHideFlags: 0

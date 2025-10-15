@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
         _rigidBody.linearVelocity = new Vector2(_moveInput.x * _playerVelocity, _rigidBody.linearVelocityY);
         
 
+
+
         if (_jumpAction.WasPressedThisFrame() && isGrounded())
         {
             Jump();
@@ -70,10 +72,38 @@ public class PlayerController : MonoBehaviour
         Movement();
         _animator.SetBool("IsJumping", !isGrounded());
 
+        
+        if (_attackAction.WasPerformedThisFrame())
+        _animator.SetTrigger("Attack");
 
+         Vector2 attackPosition = (Vector2)transform.position + new Vector2(transform.right.x * 1f, 0f);
+         Vector2 attackSize = new Vector2(1f, 1f); // Ajustalo al tamaño del golpe
+
+         Collider2D[] hits = Physics2D.OverlapBoxAll(attackPosition, attackSize, 0f);
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("enemies"))
+            {
+                Enemies enemy = hit.GetComponent<Enemies>();
+                if (enemy != null)
+            {
+                enemy.TakeDamage(1); 
+            }
+            }
+    }
         
        
        
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("enemies"))
+        {
+            TakeDamage(1);
+        }
     }
 
     void Movement()
