@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _jumpAction;
     private InputAction _attackAction;
     private InputAction _interactAction;
+    public AudioClip jumpSFX; 
 
     [SerializeField] private float _maxHealth = 10;
     [SerializeField] private float _currentHealth;
@@ -133,7 +134,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("salto");
         
       
-
+         AudioManager.instance.ReproduceSound(jumpSFX);
     }
 
     

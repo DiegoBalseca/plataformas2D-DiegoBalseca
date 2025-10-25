@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [Header("Configuración del sonido")]
     [SerializeField] private AudioClip _coinSFX;
     private bool _collected = false;
 
@@ -18,7 +19,11 @@ public class Coin : MonoBehaviour
     public void Interaction()
     {
         GameManager.instance.AddCoin();
-        AudioManager.instance.ReproduceSound(AudioManager.instance._coinSFX);
+
+        
+        if (_coinSFX != null)
+            AudioManager.instance.ReproduceSound(_coinSFX);
+
         Destroy(gameObject);
     }
 }
