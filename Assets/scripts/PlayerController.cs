@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetTrigger("Attack");
 
          Vector2 attackPosition = (Vector2)transform.position + new Vector2(transform.right.x * 1f, 0f);
-         Vector2 attackSize = new Vector2(1f, 1f); // Ajustalo al tamaño del golpe
+         Vector2 attackSize = new Vector2(1f, 1f); 
 
          Collider2D[] hits = Physics2D.OverlapBoxAll(attackPosition, attackSize, 0f);
 
